@@ -1,0 +1,33 @@
+#!/bin/bash
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+  . /etc/bashrc
+fi
+
+function pathmunge()
+{
+    [[ -d "$1" ]] || return
+    echo "$PATH" | grep -E -q "(^|:)$1($|:)" && return
+    [[ "$2" == "after" ]] && PATH=$PATH:$1 || PATH=$1:$PATH
+}
+
+pathmunge "$HOME/.local/bin"
+pathmunge "$HOME/bin"
+export PATH
+
+# Uncomment the following line if you don't like systemctl's auto-paging feature:
+# export SYSTEMD_PAGER=
+
+# User specific aliases and functions
+if [[ -d ~/.bashrc.d ]]
+then
+  for rc in ~/.bashrc.d/*; do
+    if [ -f "$rc" ]; then
+      . "$rc"
+    fi
+  done
+fi
+
+unset rc
