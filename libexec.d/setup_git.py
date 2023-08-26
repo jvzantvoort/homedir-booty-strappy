@@ -34,6 +34,8 @@ class GitConfig:
             pass
 
     def alias(self, alias, cmd):
+        if not self.config.has_section("alias"):
+            self.config.add_section("alias")
         self.config.set("alias", alias, cmd)
 
     def add_aliasses(self):
