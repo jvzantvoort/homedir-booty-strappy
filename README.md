@@ -1,2 +1,3 @@
 # homedir-booty-strappy
-Setup homedir
+
+Some tools to setup a homedir quickly
