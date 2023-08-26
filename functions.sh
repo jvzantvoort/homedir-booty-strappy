@@ -30,7 +30,7 @@ function gh_download_url()
     local repo="$1"
     local pattern="$2"
 
-    curl -s https://api.github.com/repos/${repo}/releases/latest | \
+    curl -s "https://api.github.com/repos/${repo}/releases/latest" | \
         jq -M .assets[].browser_download_url | grep "${pattern}" | sed 's,\",,g'
 }
 
@@ -86,7 +86,7 @@ function must_have_command()
     then
         return 0
     fi
-    die "command ${command}" not found"
+    die "command ${command} not found"
 }
 
 
