@@ -31,13 +31,15 @@ function list_libexec()
 pathmunge "${C_SCRIPTDIR}/bin"
 export PATH
 
+must_have_command "jq"
+
 mkstaging_area
 
 export STAGING_AREA
 
 list_libexec | while read -r scriptpath
 do
-  printf "=>> %s\n" "$(basename "${scriptpath}")"
+    printf "=>> %s\n" "$(basename "${scriptpath}")"
     $scriptpath
 done
 

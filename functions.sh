@@ -19,6 +19,12 @@
 #
 #===============================================================================
 
+function die()
+{
+  printf "Fatal: %s\n" "$@"
+  exit 1
+}
+
 function gh_download_url()
 {
   local repo="$1"
@@ -52,14 +58,6 @@ function lastdownload()
 }
 
 function mkstaging_area()
-# ------------------------------------------------------------------------------
-#         NAME:  mkstaging_area
-#  DESCRIPTION:  Creates a temporary staging area and set the variable
-#                $STAGING_AREA to point to it
-#   PARAMETERS:  STRING, mktemp template (optional)
-#      RETURNS:  0, oke
-#                1, not oke
-# ------------------------------------------------------------------------------
 {
   [[ -n "${STAGING_AREA}" ]] && return
 
@@ -81,7 +79,15 @@ function rmstaging_area()
   rm -rvf "${STAGING_AREA}" || return 1
 }
 
-
+function must_have_command()
+{
+  local command="$1"
+  if which "${command}" >/dev/null 2>&1
+  then
+    return 0
+  fi
+  die "command ${command}" not found"
+}
 
 
 #------------------------------------------------------------------------------#
