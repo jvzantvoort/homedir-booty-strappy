@@ -11,4 +11,8 @@ source "${C_TOPDIR}/functions.sh"
 
 mkdir -p "${HOME}/bin"
 
-find "${C_TOPDIR}/payload/bin" -type f -exec install -m 755 {} "${HOME}/bin" \;
+find "${C_TOPDIR}/payload/bin" -type f | while read -r target
+do
+  printf "Install: %s\n" "$(basename "${target}")"
+  install -m 755 "${target}" "${HOME}/bin"
+done
